@@ -1,5 +1,5 @@
 const path = require('path');
-const nodeExternals = require('webpack-node-externals');
+const nodeExternals = require('webpack-node-externals');//不打包扩展包
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const webpackConfig = {
