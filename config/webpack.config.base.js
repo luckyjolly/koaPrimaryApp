@@ -1,16 +1,18 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');//不打包扩展包
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const webpack = require('webpack');
+const utils = require('./urils');
 
 const webpackConfig = {
   target: 'node',
   mode: 'development',
   entry: {
-    server: path.join(__dirname, '/index.js')
+    server: path.join(utils.APP_PATH, '/index.js')
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.join(__dirname, '/dist')
+    path: utils.DIST_PATH
   },
   devtool: 'eval-source-map',
   module: {
@@ -26,7 +28,12 @@ const webpackConfig = {
   },
   externals: [nodeExternals()],
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'prod') ? '"production"' : '"development"'
+      }
+    })
   ],
   node: {
     console: true,
