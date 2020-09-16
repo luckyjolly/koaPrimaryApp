@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node .\\index.js"
+    "start": "nodemon --exec babel-node .\\index.js",
+    "webpack:debug": "node --inspect-brk .\\node_modules\\.bin\\webpack --inline --progress"
   },
   "keywords": [],
   "author": "",

@@ -1,5 +1,5 @@
 module.exports = ctx => {
   ctx.body = {
-    message: 'Hello from a.'
+    message: 'Hello from a...'
   }
 };
