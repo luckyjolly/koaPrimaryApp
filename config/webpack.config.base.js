@@ -6,7 +6,6 @@ const utils = require('./urils');
 
 const webpackConfig = {
   target: 'node',
-  mode: 'development',
   entry: {
     server: path.join(utils.APP_PATH, '/index.js')
   },
@@ -14,7 +13,6 @@ const webpackConfig = {
     filename: '[name].bundle.js',
     path: utils.DIST_PATH
   },
-  devtool: 'eval-source-map',
   module: {
     rules: [
       {

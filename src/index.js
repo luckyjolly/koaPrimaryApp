@@ -8,8 +8,10 @@ import KoaJson from 'koa-json'
 import koaBody from 'koa-body'
 import KoaCompose from 'koa-compose'
 import Cors from '@koa/cors'
+import koaCompress from 'koa-compress'
 
 const app = new Koa();
+const isDevMode = process.env.NODE_ENV === 'production' ? false : true;
 
 // app.use(helmet());
 // app.use(static(__dirname));//访问根目录下所有文件
@@ -22,6 +24,10 @@ const middleware = KoaCompose([
   helmet(),
   Static(path.join(__dirname, './static'))
 ]);
+
+if(!isDevMode){
+  koaCompress(koaCompress());//压缩koa的中间件
+}
 
 app.use(middleware);
 app.use(router());
