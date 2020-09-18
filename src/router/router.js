@@ -1,5 +1,5 @@
 const combineRouters = require('koa-combine-routers');
 
-import demoRouter from './demoRouter';
+import publicRouter from './publicRouter';
 
-module.exports = combineRouters(demoRouter);
+module.exports = combineRouters(publicRouter);
