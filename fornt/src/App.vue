@@ -48,7 +48,7 @@
           </div>
           <div class="layui-form-mid svg" v-html="svg" @click="getCaptcha"></div>
         </div>
-        <button class="layui-btn">点击登录</button>
+        <button class="layui-btn" @click="checkForm">点击登录</button>
         <a href="" class="imook-link">忘记密码</a>
       </form>
     </div>
@@ -81,6 +81,20 @@ export default {
           }
         }
       })
+    },
+
+    checkForm () {
+      this.errorMsg = [];
+
+      if (!this.name) {
+        this.errorMsg.push('登录名为空')
+      }
+      if (!this.password) {
+        this.errorMsg.psuh('密码不能为空')
+      }
+      if (!this.code) {
+        this.errorMsg.push('验证码为空')
+      }
     }
   }
 }
