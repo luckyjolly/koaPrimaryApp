@@ -84,7 +84,7 @@ export default {
     },
 
     checkForm () {
-      this.errorMsg = [];
+      this.errorMsg = []
 
       if (!this.name) {
         this.errorMsg.push('登录名为空')

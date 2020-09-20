@@ -7,7 +7,7 @@
     "start": "nodemon --exec babel-node .\\src\\index.js",
     "webpack:debug": "node --inspect-brk .\\node_modules\\.bin\\webpack --inline --progress",
     "build": "cross-env NODE_ENV=prod webpack --config config/webpack.config.prod.js",
-    "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node --inspect=9230 .\\src\\index.js",
+    "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node --inspect=9230 ./src/index.js",
     "clean": "rimraf dist"
   },
   "keywords": [],
