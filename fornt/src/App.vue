@@ -4,49 +4,46 @@
       <form action class="layui-form layui-form-pane">
         <div class="layui-form-item">
           <label for class="layui-form-label">用户名</label>
-          <div class="layui-input-block">
+          <div class="layui-input-inline">
             <input
               type="text"
-              name="title"
-              required="required"
-              lay-verify="required"
+              name="name"
               placeholder="请输入标题"
-              autocomplete="off"
               class="layui-input"
               v-model="name"
+              v-validate="'required|email'"
             />
           </div>
+          <div class="layui-form-mid error">{{errors.first('name')}}</div>
         </div>
         <div class="layui-form-item">
           <label for class="layui-form-label">密码</label>
-          <div class="layui-input-block">
+          <div class="layui-input-inline">
             <input
               type="password"
-              name="title"
-              required="required"
-              lay-verify="required"
+              name="password"
               placeholder="请输入标题"
-              autocomplete="off"
               class="layui-input"
               v-model="password"
+              v-validate="'required|min:6'"
             />
           </div>
+          <div class="layui-form-mid error">{{errors.first('password')}}</div>
         </div>
         <div class="layui-form-item">
           <label for class="layui-form-label">验证码</label>
           <div class="layui-input-inline">
             <input
               type="text"
-              name="title"
-              required="required"
-              lay-verify="required"
+              name="code"
               placeholder="请输入标题"
-              autocomplete="off"
               class="layui-input"
               v-model="code"
+              v-validate="'required|length:4'"
             />
           </div>
           <div class="layui-form-mid svg" v-html="svg" @click="getCaptcha"></div>
+          <div class="layui-form-mid error">{{errors.first('code')}}</div>
         </div>
         <button class="layui-btn" @click="checkForm">点击登录</button>
         <a href="" class="imook-link">忘记密码</a>
@@ -120,5 +117,9 @@ input{
 .svg {
   position: relative;
   top: -15px;
+}
+
+.error {
+  color: red;
 }
 </style>
