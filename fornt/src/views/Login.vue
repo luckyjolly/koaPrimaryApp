@@ -1,125 +1,168 @@
 <template>
-  <div id="app">
-    <div class="layui-container">
-      <form action class="layui-form layui-form-pane">
-        <div class="layui-form-item">
-          <label for class="layui-form-label">用户名</label>
-          <div class="layui-input-inline">
-            <input
-              type="text"
-              name="name"
-              placeholder="请输入标题"
-              class="layui-input"
-              v-model="name"
-              v-validate="'required|email'"
-            />
-          </div>
-          <div class="layui-form-mid error">{{errors.first('name')}}</div>
+  <div class="layui-container fly-marginTop">
+    <div class="fly-panel fly-panel-user" pad20>
+      <div class="layui-tab layui-tab-brief" lay-filter="user">
+        <ul class="layui-tab-title">
+          <li class="layui-this">登入</li>
+          <li>
+            <router-link :to="{name: 'reg'}">注册</router-link>
+          </li>
+        </ul>
+        <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+          <validation-observer ref="observer" v-slot="{ validate }">
+            <div class="layui-tab-item layui-show">
+              <div class="layui-form layui-form-pane">
+                <form method="post">
+                  <div class="layui-form-item">
+                    <label for="L_email" class="layui-form-label">用户名</label>
+                    <validation-provider name="email" rules="required|email">
+                      <div class="layui-input-inline">
+                        <input
+                          type="text"
+                          name="username"
+                          v-model="username"
+                          placeholder="请输入用户名"
+                          autocomplete="off"
+                          class="layui-input"
+                        />
+                      </div>
+                      <div class="layui-form-mid">
+                        <span style="color: #c00;"></span>
+                      </div>
+                    </validation-provider>
+                  </div>
+                  <div class="layui-form-item">
+                    <label for="L_pass" class="layui-form-label">密码</label>
+                    <validation-provider name="password" rules="required|min:6" v-slot="{errors}">
+                      <div class="layui-input-inline">
+                        <input
+                          type="password"
+                          name="password"
+                          v-model="password"
+                          placeholder="请输入密码"
+                          autocomplete="off"
+                          class="layui-input"
+                        />
+                      </div>
+                      <div class="layui-form-mid">
+                        <span style="color: #c00;">{{errors[0]}}</span>
+                      </div>
+                    </validation-provider>
+                  </div>
+                  <div class="layui-form-item">
+                    <validation-provider name="code" rules="required|length:4" v-slot="{errors}">
+                      <div class="layui-row">
+                        <label for="L_vercode" class="layui-form-label">验证码</label>
+                        <div class="layui-input-inline">
+                          <input
+                            type="text"
+                            name="code"
+                            v-model="code"
+                            placeholder="请输入验证码"
+                            autocomplete="off"
+                            class="layui-input"
+                          />
+                        </div>
+                        <div class>
+                          <span class="svg" style="color: #c00;" @click="_getCode()" v-html="svg"></span>
+                        </div>
+                      </div>
+                      <div class="layui-form-mid">
+                        <span style="color: #c00;">{{errors[0]}}</span>
+                      </div>
+                    </validation-provider>
+                  </div>
+                  <div class="layui-form-item">
+                    <button class="layui-btn" type="button" @click="validate().then(submit)">立即登录</button>
+                    <span style="padding-left:20px;">
+                      <router-link :to="{name: 'forget'}">忘记密码？</router-link>
+                    </span>
+                  </div>
+                  <div class="layui-form-item fly-form-app">
+                    <span>或者使用社交账号登入</span>
+                    <a
+                      href
+                      onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})"
+                      class="iconfont icon-qq"
+                      title="QQ登入"
+                    ></a>
+                    <a
+                      href
+                      onclick="layer.msg('正在通过微博登入', {icon:16, shade: 0.1, time:0})"
+                      class="iconfont icon-weibo"
+                      title="微博登入"
+                    ></a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </validation-observer>
         </div>
-        <div class="layui-form-item">
-          <label for class="layui-form-label">密码</label>
-          <div class="layui-input-inline">
-            <input
-              type="password"
-              name="password"
-              placeholder="请输入标题"
-              class="layui-input"
-              v-model="password"
-              v-validate="'required|min:6'"
-            />
-          </div>
-          <div class="layui-form-mid error">{{errors.first('password')}}</div>
-        </div>
-        <div class="layui-form-item">
-          <label for class="layui-form-label">验证码</label>
-          <div class="layui-input-inline">
-            <input
-              type="text"
-              name="code"
-              placeholder="请输入标题"
-              class="layui-input"
-              v-model="code"
-              v-validate="'required|length:4'"
-            />
-          </div>
-          <div class="layui-form-mid svg" v-html="svg" @click="getCaptcha"></div>
-          <div class="layui-form-mid error">{{errors.first('code')}}</div>
-        </div>
-        <button class="layui-btn" @click="checkForm">点击登录</button>
-        <a href="" class="imook-link">忘记密码</a>
-      </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import { ValidationProvider } from 'vee-validate'
+// import { getCode, login } from '@/api/login'
+// import uuid from 'uuid/v4'
 export default {
-  name: 'app',
+  name: 'login',
+  components: {
+    ValidationProvider,
+  },
   data () {
     return {
-      svg: '',
-      name: '',
+      username: '',
       password: '',
-      code: ''
+      code: '',
+      svg: ''
     }
   },
   mounted () {
-    this.getCaptcha()
+    // let sid = ''
+    // if (localStorage.getItem('sid')) {
+    //   sid = localStorage.getItem('sid')
+    // } else {
+    //   sid = uuid()
+    //   localStorage.setItem('sid', sid)
+    // }
+    // this.$store.commit('setSid', sid)
+    // console.log(sid)
+    // this._getCode()
   },
   methods: {
-    getCaptcha () {
-      axios.get('http://localhost:3000/getCaptcha').then(res => {
-        if (res.status === 200) {
-          const obj = res.data
-
-          if (obj.code === 200) {
-            this.svg = obj.data
-          }
-        }
-      })
-    },
-
-    checkForm () {
-      this.errorMsg = []
-
-      if (!this.name) {
-        this.errorMsg.push('登录名为空')
-      }
-      if (!this.password) {
-        this.errorMsg.psuh('密码不能为空')
-      }
-      if (!this.code) {
-        this.errorMsg.push('验证码为空')
-      }
-    }
+    // _getCode () {
+    //   let sid = this.$store.state.sid
+    //   getCode(sid).then((res) => {
+    //     if (res.code === 200) {
+    //       this.svg = res.data
+    //     }
+    //   })
+    // },
+    // async submit () {
+    //   const isValid = await this.$refs.observer.validate()
+    //   if (!isValid) {
+    //     // ABORT!!
+    //     return
+    //   }
+    //   console.log('submit')
+    //   login({
+    //     username: this.username,
+    //     password: this.password,
+    //     code: this.code,
+    //     sid: this.$store.state.sid
+    //   }).then((res) => {
+    //     if (res.code === 200) {
+    //       console.log(res)
+    //     }
+    //   })
+    // }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-#app{
-  background: #f5f5f5;
-}
-.layui-container{
-  background: #fff;
-}
-input{
-  width: 190px;
-}
-.imook-link{
-  margin-left: 10px;
-  &:hover{
-    color: #009688;
-  }
-}
-
-.svg {
-  position: relative;
-  top: -15px;
-}
-
-.error {
-  color: red;
-}
+// 公用样式可以放在App.vue中
 </style>
