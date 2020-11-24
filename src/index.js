@@ -3,7 +3,7 @@ import Koa from 'koa'
 const path = require('path');
 const helmet = require('koa-helmet');//安全headers
 const Static = require('koa-static');
-const router = require('./router/router');
+import router from './router/router'
 import KoaJson from 'koa-json'
 import koaBody from 'koa-body'
 import KoaCompose from 'koa-compose'

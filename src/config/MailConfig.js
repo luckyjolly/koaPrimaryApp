@@ -18,6 +18,8 @@ async function send (sendInfo) {
   })
   // 以上host port设置，参考 https://service.mail.qq.com/cgi-bin/help?subtype=1&&id=28&&no=369 中 Foxmail 的设置部分
 
+  let url = 'http://www.imooc.com'
+  
   let info = transporter.sendMail({
     from: '"认证邮件" <860194716@qq.com>', // sender address
     to: sendInfo.email, // list of receivers
