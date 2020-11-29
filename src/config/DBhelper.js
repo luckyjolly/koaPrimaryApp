@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import config from './index'
 
+console.log('config: ', config);
 mongoose.connect(config.DB_URL, {
   useNewUrlParser: true,
 })
