@@ -1,7 +1,6 @@
 import redis from 'redis'
-import { promisify, promisifyAll } from 'bluebird'
+import { promisifyAll } from 'bluebird'
 import config from './index'
-import { cli } from 'webpack';
 
 const options = {
   host: config.REDIS.host,
@@ -42,7 +41,7 @@ const setValue = (key, value, time) => {
     })
   } else {
     if (time) {
-      client.set(key, value, 'EX', time) // 设置过期时间
+      client.set(key, value, 'EX', time) // 设置过期时间，按分钟计时
     } else {
       client.set(key, value)
     }

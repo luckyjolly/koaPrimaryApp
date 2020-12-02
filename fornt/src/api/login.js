@@ -1,4 +1,3 @@
-import { options } from 'svg-captcha'
 import axios from '../utils/request'
 
 /**

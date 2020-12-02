@@ -6,13 +6,13 @@ class HttpRequest {
   constructor (baseUrl) {
     this.baseUrl = baseUrl
   }
-  
+
   /**
    * 获取axios配置
    */
   getInsideConfig () {
     const config = {
-      baseUrl: this.baseUrl,
+      baseURL: this.baseUrl,
       headers: {
         'Content-type': 'application/json;charset=utf-8'
       },
@@ -20,12 +20,11 @@ class HttpRequest {
     }
     return config
   }
-  
+
   /**
    * 设定拦截器
    */
   interceptors (instance) {
-
     // 请求拦截器
     instance.interceptors.request.use((config) => {
       return config
@@ -37,7 +36,7 @@ class HttpRequest {
     // 相应拦截器
     instance.interceptors.response.use((res) => {
       if (res.status === 200) {
-        return Promise.resolve(res)
+        return Promise.resolve(res.data)
       } else {
         return Promise.reject(res)
       }
@@ -52,7 +51,7 @@ class HttpRequest {
    */
   request (options) {
     const instance = axios.create()
-    const newOptions = Object.assign(this.getInsideConfig, options)
+    const newOptions = Object.assign(this.getInsideConfig(), options)
     this.interceptors(instance)
     return instance(newOptions)
   }
@@ -64,6 +63,7 @@ class HttpRequest {
     }, config)
     return this.request(options)
   }
+
   post (url, data) {
     return this.request({
       method: 'post',

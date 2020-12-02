@@ -103,8 +103,8 @@
 
 <script>
 import { ValidationProvider } from 'vee-validate'
-// import { getCode, login } from '@/api/login'
-// import uuid from 'uuid/v4'
+import { getCode } from '../api/login'
+import uuid from 'uuid/dist/v4'
 export default {
   name: 'login',
   components: {
@@ -119,26 +119,25 @@ export default {
     }
   },
   mounted () {
-    // let sid = ''
-    // if (localStorage.getItem('sid')) {
-    //   sid = localStorage.getItem('sid')
-    // } else {
-    //   sid = uuid()
-    //   localStorage.setItem('sid', sid)
-    // }
-    // this.$store.commit('setSid', sid)
-    // console.log(sid)
-    // this._getCode()
+    let sid = ''
+    if (localStorage.getItem('sid')) {
+      sid = localStorage.getItem('sid')
+    } else {
+      sid = uuid()
+      localStorage.setItem('sid', sid)
+    }
+    this.$store.commit('setSid', sid)
+    this._getCode()
   },
   methods: {
-    // _getCode () {
-    //   let sid = this.$store.state.sid
-    //   getCode(sid).then((res) => {
-    //     if (res.code === 200) {
-    //       this.svg = res.data
-    //     }
-    //   })
-    // },
+    _getCode () {
+      const sid = this.$store.state.sid
+      getCode(sid).then(res => {
+        if (res.code === 200) {
+          this.svg = res.data
+        }
+      })
+    }
     // async submit () {
     //   const isValid = await this.$refs.observer.validate()
     //   if (!isValid) {

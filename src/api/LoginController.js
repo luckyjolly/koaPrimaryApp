@@ -23,6 +23,14 @@ class LoginController {
       console.log(e)
     }
   }
+
+  // async login (ctx) {
+  //   let body = ctx.request.body,
+  //       sid = body.sid,
+  //       code = body.code
+    
+
+  // }
 }
 
 export default new LoginController()

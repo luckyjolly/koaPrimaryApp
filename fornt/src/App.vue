@@ -19,4 +19,10 @@ export default {
 
 <style lang="scss">
 @import "assets/css/global.css";
+
+// 公用样式
+.svg {
+  position: relative;
+  top: -4px;
+}
 </style>

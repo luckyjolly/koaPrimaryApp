@@ -1,4 +1,4 @@
-import { Validator } from 'vee-validate'
+import { Validator } from 'vee-validate' //vee-validate 2.0
 
 const dictionary = {
   'zh-CN': {
