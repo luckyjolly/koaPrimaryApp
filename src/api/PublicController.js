@@ -3,6 +3,11 @@ import { setValue } from '../config/RedisConfig'
 
 class PublicController {
   constructor() {}
+
+  /**
+   * 生成验证码
+   * @param {Objeck} ctx 
+   */
   async getCaptcha(ctx) {
     let body = ctx.request.query
     const newCaptcha = svgCaptcha.create({
