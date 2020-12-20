@@ -161,11 +161,12 @@ export default {
           })
           console.log(res)
         } else if (res.code === 401) {
-          this.$refs.codefield.setError([res.msg])
+          this.$refs.codefield.setErrors([res.msg]) // 参数是一个数组
         } else if (res.code === 404) {
           this.$alert(res.msg)
         }
       }).catch(err => {
+        console.log('err: ', err)
         const data = err.response.data
         if (data.code === 500) {
           this.$alert('用户名密码检验失败，请检查！')

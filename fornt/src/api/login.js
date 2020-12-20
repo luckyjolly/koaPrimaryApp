@@ -28,8 +28,17 @@ const login = (longinInfo) => {
   return axios.post('/login/login', longinInfo)
 }
 
+/**
+ * 登录接口
+ * @param {*} regInfo 用户登录信息
+ */
+const reg = (regInfo) => {
+  return axios.post('/login/reg', regInfo)
+}
+
 export {
   getCode,
   forget,
-  login
+  login,
+  reg
 }
